@@ -11,6 +11,7 @@ import { Container } from "semantic-ui-react";
 import Available from './components/Available';
 import Cities from './components/Cities';
 import FindHome from './components/FindHome';
+import CityCost from './components/CityCost';
 
 const App = () => (
   <Fragment>
@@ -21,6 +22,7 @@ const App = () => (
           <ProtectedRoute exact path="/" component={Home} />
           <Route exact path="/login" component={Login} />
           <Route exact path="/register" component={Register} />
+          <Route exact path='/city_cost' component={CityCost} />
 
           <Route exact path="/available" component={Available} />
           <Route exact path="/cities" component={Cities} />
