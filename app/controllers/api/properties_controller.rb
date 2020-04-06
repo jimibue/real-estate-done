@@ -13,6 +13,12 @@ class Api::PropertiesController < ApplicationController
     render json: { properties: properties, total_pages: total_pages }
   end
 
+  def city
+    properties = Property.page(@page).by_city(params[:city])
+    total_pages = properties.total_pages
+    render json: { properties: properties, total_pages: total_pages }
+  end
+
   private
 
   def set_page
