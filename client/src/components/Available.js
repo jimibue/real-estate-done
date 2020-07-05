@@ -33,9 +33,21 @@ class Available extends React.Component {
       });
     });
   }
+  // here we get data... array of...
+  // id, price, beds, baths, sq_ft, agent_id, city, zip
+  // street, first_name, last_name, email: 
+
+ // return agent_id
+// first_name, last_name, email, phone: undefined properties:[]
+
   normalizeData = (data) => {
+    console.log('data', data)
     let agents = [];
+    // get all unique set of in data ids ie 
+    // get agent_ids
     let ids = [...new Set(data.map((d) => d.agent_id))];
+    console.log('ids', ids)
+    // should be for_each
     ids.map((id) => {
       let properties = data.filter((d) => d.agent_id === id);
       let { agent_id, first_name, last_name, email, phone } = properties[0];
@@ -54,6 +66,7 @@ class Available extends React.Component {
       };
 
       agents.push(detail);
+      console.log('agents', agents)
     });
     return agents;
   };
@@ -61,6 +74,7 @@ class Available extends React.Component {
   loadMore = () => {
     const page = this.state.page + 1;
     axios.get(`/api/properties?page=${page}`).then(({ data }) => {
+      console.log('data:', data)
       let agents = this.normalizeData(data.properties);
       this.setState({ agents: [...this.state.agents, ...agents] });
     });

@@ -1,4 +1,5 @@
 class Api::PropertiesController < ApplicationController
+  before_action :set_page
   # def index
   #   render json: Property.available
   # end

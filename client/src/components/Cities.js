@@ -26,10 +26,11 @@ class Cities extends React.Component {
   }
 
   getProperties = () => {
-    const { city, properties, page } = this.state;
+    const { city,  page } = this.state;
     axios.get(`/api/cities/${city}?page=${page}`)
       .then( res => {
         const { properties, total_pages } = res.data; 
+        console.log('res',res)
         this.setState({ 
           properties: [...this.state.properties, ...properties], 
           total_pages, 

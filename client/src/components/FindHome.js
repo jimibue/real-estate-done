@@ -7,7 +7,10 @@ class FindHome extends React.Component {
   // state = { agents: [], agent: null, buyers: [], buyer: null, };
   state = { agents: [], agent: null, buyers: [], buyer: null, properties: [] };
   componentDidMount() {
-    axios.get("/api/agents").then((res) => this.setState({ agents: res.data }));
+    axios.get("/api/agents").then((res) => {
+      console.log(res)
+      this.setState({ agents: res.data })
+    });
   }
 
   agentList = () => {
@@ -15,7 +18,7 @@ class FindHome extends React.Component {
     return agents.map((agent) => {
       return {
         key: agent.id,
-        text: `${agent.first_name} ${agent.last_name}`,
+        text: `${agent.first_name} ${agent.last_name} ${agent.frequency}`,
         value: agent.id,
       };
     });
@@ -36,7 +39,10 @@ class FindHome extends React.Component {
     this.setState({ agent: value }, () => {
       axios
         .get(`/api/agents/${this.state.agent}`)
-        .then((res) => this.setState({ buyers: res.data }));
+        .then((res) => {
+          console.log(`/api/agents/${this.state.agent}`, res)
+          this.setState({ buyers: res.data })}
+          );
     });
   };
 
@@ -44,7 +50,10 @@ class FindHome extends React.Component {
     this.setState({ buyer: value }, () => {
       axios
         .get(`/api/buyers/${this.state.buyer}`)
-        .then((res) => this.setState({ properties: res.data }));
+        .then((res) => {
+          this.setState({ properties: res.data })
+        
+          console.log(`/api/buyers/${this.state.buyer}`, res)});
     });
   };
 

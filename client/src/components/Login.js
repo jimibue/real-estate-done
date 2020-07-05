@@ -1,9 +1,29 @@
 import React from 'react';
 import { AuthConsumer, } from "../providers/AuthProvider";
 import { Button, Form, Segment, Header, } from 'semantic-ui-react';
+import Dropzone from 'react-dropzone';
+import axios from 'axios'
 
 class Login extends React.Component {
   state = { email: '', password: '' }
+
+ onDrop =  async (files) =>{
+   try{
+      console.log(files)
+      const formData = new FormData();
+      formData.append('file', files[0]);
+      const data = await axios.post(`/api/documents/`, formData)
+   } catch(e) {
+     console.log('error')
+     console.log(e)
+
+   }
+
+
+      // fileList.forEach((file) => {
+          
+      // });
+  }
 
   handleSubmit = (e) => {
     e.preventDefault();
@@ -21,6 +41,26 @@ class Login extends React.Component {
 
     return (
       <Segment basic>
+                <Dropzone
+          onDrop={this.onDrop}
+          multiple={false}
+        >
+          {({ getRootProps, getInputProps, isDragActive }) => {
+            return (
+              <div
+                {...getRootProps()}
+               
+              >
+                <input {...getInputProps()} />
+                {
+                  isDragActive ?
+                    <p>Drop files here...</p> :
+                    <p>Try dropping some files here, or click to select files to upload.</p>
+                }
+              </div>
+            )
+          }}
+        </Dropzone>
         <Header as='h1' textAlign='center'>Login</Header>
         <Form onSubmit={this.handleSubmit}>
           <Form.Input
@@ -45,6 +85,8 @@ class Login extends React.Component {
             <Button primary type='submit'>Submit</Button>
           </Segment>
         </Form>
+
+
       </Segment>
     )
   }
