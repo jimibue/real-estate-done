@@ -10,6 +10,9 @@ gem "puma", "~> 3.11"
 gem "bootsnap", ">= 1.1.0", require: false
 # Authentication
 gem "devise_token_auth"
+gem "kaminari"
+gem "cloudinary"
+gem "dotenv-rails"
 
 group :development, :test do
   # Debugging

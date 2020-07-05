@@ -2,6 +2,8 @@ class Property < ApplicationRecord
   belongs_to :agent
   has_one :address
 
+  # ??? why do i not need the FROM clause below
+
   def self.available
     select("properties.id, price, beds, baths, sq_ft,
             ad.city, ad.zip, ad.street,
@@ -10,5 +12,16 @@ class Property < ApplicationRecord
             INNER JOIN addresses ad ON ad.property_id = properties.id")
       .where("properties.sold <> TRUE")
       .order("a.id")
+  end
+
+  # SELECT properties.id, price, beds, baths, sq_ft
+  # FROM properties
+  # INNER JOIN addresses a ON a.property_id = properties.id
+  # WHERE LOWER(a.city) = 'sandy' AND properties.sold <> TRUE
+
+  def self.by_city(city)
+    select("properties.id, price, beds, baths, sq_ft")
+      .joins("INNER JOIN addresses a ON a.property_id = properties.id")
+      .where("LOWER(a.city) = ? AND properties.sold <> TRUE", city.downcase)
   end
 end
